@@ -7,10 +7,16 @@ module.exports = (sequelize, DataTypes) => {
    
     static associate(models) {
       List.belongsTo(models.User,{
-        foreignKey:'user_id',
-        as:'user',
+        foreignKey:'userId',
+        as:'userlist',
         onDelete:'CASCADE',
         onUpdate:'CASCADE'
+      })
+      List.belongsToMany(models.Card, { 
+        foreignKey: 'cardId',
+        as: 'lists',
+        through: models.Card_list,
+        uniqueKey: false
       })
     }
   }
@@ -32,7 +38,16 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    name: DataTypes.STRING,
+    name:{ 
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique:true,
+      validate: {
+        notNull:{
+          msg: 'Please name your deck at the very least'
+        }
+      }
+    },
     description: DataTypes.TEXT,
     completed: DataTypes.BOOLEAN,
     quantity: DataTypes.INTEGER,

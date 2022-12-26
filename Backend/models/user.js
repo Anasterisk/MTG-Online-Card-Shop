@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.List,{
-        foreignKey: 'user_id',
-        as: 'list',
+        foreignKey: 'listId',
+        as: 'user_list',
         onDelete:'CASCADE',
         onUpdate:'CASCADE',
       })
       User.hasMany(model.Card,{
-        foreignKey: 'user_id',
-        as:'card',
+        foreignKey: 'cardId',
+        as:'cards_owned',
         onDelete:'CASCADE',
         onUpdate:'CASCADE',
       })
